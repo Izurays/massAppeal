@@ -1,0 +1,19 @@
+{
+  "name": "massappeal",
+  "version": "1.0.0",
+  "description": "massAppeal website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Izurays/massAppeal.git"
+  },
+  "author": "Onyeocha Izunna Chideb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Izurays/massAppeal/issues"
+  },
+  "homepage": "https://github.com/Izurays/massAppeal#readme"
+}
