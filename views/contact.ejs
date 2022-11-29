@@ -1,23 +1,17 @@
 <%- include('./layout/boilerplate')%>
+
+
+<h1>CERTIFIED TO ATTRACT</h1>
+
 <h2>All Videos</h2>
+<ul>
+    <% for (let video of videos) { %>
+        <li><a href="/contact/<%= video._id %> "><%= video.title %> </a></li>
+        <% } %>  
+</ul>
 
-<% for (let video of videos){%>
-    <div class="card mb-3">
-        <div class="row">
-            <div class="col-md-4">
-                <li><a href="/contact/<%= video._id %> "> </a></li>
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title"><%= video.title %> </h5>
 
-                    <p class="card-text" id="para"><%= video.description %></p>
-                    <a class="btn btn-primary" href="/contact/<%= video._id %> ">View <%=video.title%></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <% }%>
+
 <div class="container">
 
     <ul class="list-group">

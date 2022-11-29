@@ -27,7 +27,7 @@ const seedDB = async () => {
             
         const video = new Video({
             //YOUR USER ID
-            author:"638264373b72517c398e04b1",
+            //author: "628772f3a605eec19c9cb129",
             title: `${title[random4].title}`,
             description: `${description[random4].description}`,
             video:"./videos/video1.mp4",
