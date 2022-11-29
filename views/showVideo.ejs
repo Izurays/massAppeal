@@ -31,7 +31,7 @@
     <link href="/style/carousel.css" rel="stylesheet">
     <link rel="stylesheet" href="/style/style.css">
 
-    
+    <link rel="stylesheet" href="/style/stars.css">
     <!--<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>-->
 
     
@@ -55,7 +55,7 @@
               <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
+                </li> 
                 <li class="nav-item">
                   <a class="nav-link" href="/videoupload">Upload</a>
                 </li>
@@ -88,23 +88,45 @@
               <h5 class="card-title"><%= video.title%></h5>
               <p class="card-text" id="paratext"><%= video.description%></p>
           </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Uploaded by <%= video.author.username%></li>
+        </ul>
          
-          </div>
-      <button class="btn btn-secondary"><a href="/contact/<%= video._id %>/editVideo ">EDIT</a></button>
+      </div>
+      <%if(currentUser && video.author.equals(currentUser._id)) { %> 
+      <div class="card-body">
+        <button class="btn btn-secondary"><a href="/contact/<%= video._id %>/editVideo ">EDIT</a></button>
       <p>
-        <form action="/contact/<%= video._id %>?_method=DELETE" method="POST">
+        
+      <form action="/contact/<%= video._id %>?_method=DELETE" method="POST">
           <button class="btn btn-danger">DELETE</button>
-        </form>
-</div>   
+      </form>
+      </div>
+      <%} %> 
+      
+</div>
+<% if(currentUser){ %> 
 <div class="col-6">
   <h2>Add a comment</h2>
 
 
   <form action="/contact/<%= video._id %>/comments"  method="POST" validated-form class="mb-3">
-    <div class="mb-3">
-      <label class="form-label" for="rating">Rating</label>
-      <input class="form-range" type="range" min="1" max="5" name="comment[rating]" id="rating">
-    </div>
+
+    <fieldset class="starability-basic">
+      <input type="radio" id="no-rate" class="input-no-rate" name="comment[rating]" value="1" checked
+          aria-label="No rating." />
+      <input type="radio" id="first-rate1" name="comment[rating]" value="1" />
+      <label for="first-rate1" title="Terrible">1 star</label>
+      <input type="radio" id="first-rate2" name="comment[rating]" value="2" />
+      <label for="first-rate2" title="Not good">2 stars</label>
+      <input type="radio" id="first-rate3" name="comment[rating]" value="3" />
+      <label for="first-rate3" title="Average">3 stars</label>
+      <input type="radio" id="first-rate4" name="comment[rating]" value="4" />
+      <label for="first-rate4" title="Very good">4 stars</label>
+      <input type="radio" id="first-rate5" name="comment[rating]" value="5" />
+      <label for="first-rate5" title="Amazing">5 stars</label>
+  </fieldset>
+
     <div class="mb-3">
       <label class="form-label" for="body">Comment</label>
       <textarea  class="form-control" name="comment[body]" id="body" cols="30" rows="3" required></textarea>
@@ -116,22 +138,28 @@
   <% for (let comment of video.comments) { %> 
     <div class="mb-3 card">
       <div class="card-body">
-        <h5 class="card-title">Rating: <%= comment.rating%></h5>
+        <h6 class="card-subtitle mb-6 text-muted">By <%= comment.author.username %> </h6>
+        <p class="starability-result" data-rating="<%=comment.rating%>">
+          Rated: <%= comment.rating %> stars
+      </p>
         <p class="card-text" id="paratext">Comment: <%= comment.body%></p>
+        <% if ((currentUser && comment.author.equals(currentUser)) || currentUser.author.equals('Admin')){ %> 
         <form action="/contact/<%=video._id %>/comments/<%=comment._id %>?_method=DELETE" method="POST">
           <button class="btn btn-sm btn-danger">Delete</button>
         </form>
+        <% } %> 
       </div>
     </div>
     
     <% } %> 
 </div>
 </div>   
+<% } %> 
 
  <!-- FOOTER -->
  <footer class="container">
     <p class="float-end"><a href="#">Back to top</a></p>
-    <p>&copy; Mass Appeal Ent. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    <p>&copy; Mass Appeal Ent</p>
   </footer>
 </main>
 
