@@ -13,7 +13,11 @@ const VideoSchema = new Schema({
             ref: 'Comment'
         }
        
-    ]
+    ],
+    author:{
+        type: Schema.Types.ObjectId,
+        ref:'User'
+    }
     
 });
 VideoSchema.post('findOneAndDelete', async function(doc){
