@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const VideoSchema = new Schema({
     title: String,
     description: String,
-    video:String,
+    videopath:String,
     comments: [
         {
             type:Schema.Types.ObjectId,

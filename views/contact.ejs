@@ -10,9 +10,13 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title"><%= video.title %> </h5>
-
+                    
+                    <video width="300" height="100" controls>
+                        <source src="<%= video.videopath %> " type=video/mp4>
+                    </video>
                     <p class="card-text" id="para"><%= video.description %></p>
                     <a class="btn btn-primary" href="/contact/<%= video._id %> ">View <%=video.title%></a>
+
                 </div>
             </div>
         </div>

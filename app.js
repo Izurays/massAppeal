@@ -1,24 +1,31 @@
+if(process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const joi = require('joi');
 const session = require('express-session');
+
 const flash = require('connect-flash');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require ('./models/user');
 const {isLoggedIn} = require('./middleware');
 const Video = require('./models/videoUpload');
-
+const mongoSanitize = require('express-mongo-sanitize');
+//const helmet = require('helmet');
+const mongoDBstore = require('connect-mongo');
 
 const expressError = require('./utils/ExpressError')
 const videosRoutes = require ('./routes/video');
 const commentsRoutes = require ('./routes/comments');
 const userRoutes = require ('./routes/user');
 const catchAsync = require("./utils/catchAsync");
+const { options } = require('joi');
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/mass-appeal';
+const dbUrl = process.env.DB_URI || 'mongodb://localhost:27017/mass-appeal';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -45,7 +52,27 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 
+
+const store =  mongoDBstore.create({
+    mongoUrl: dbUrl,
+    secret:'thisissecret',
+    touchAfter: 24 * 60 * 60
+})  
+
+//const store = new mongoDBstore({
+   // url: dbUrl,
+   // secret:'thisissecret',
+    //touchAfter: 24 * 60 * 60
+//});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+})
+
+
 const sessionConfig = {
+    store,
+    name: "ThirdMonkey",
     secret:'thisissecret',
     resave: false,
     saveUninitialized: true,
@@ -57,7 +84,11 @@ const sessionConfig = {
     }
 
 }
+
 app.use(session(sessionConfig));
+
+
+
 app.use(flash());
 
 app.use(passport.initialize());
@@ -66,6 +97,9 @@ passport.use(new localStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+app.use(mongoSanitize());
+
+//app.use(helmet({contentSecurityPolicy:false}));
 
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user;

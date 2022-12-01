@@ -1,4 +1,5 @@
 const Video = require('../models/videoUpload');
+const mongoose = require("mongoose");
 
 
 module.exports.index = async (req,res)=>{
@@ -26,6 +27,7 @@ module.exports.showVideo = async (req,res)=>{
         req.flash('error','that video does not exist');
         return res.redirect('/contact');
     }
+   // if( !mongoose.Types.ObjectId.isValid(req.params._id) ) return false;
     res.render('showVideo', { video});
 }
 
