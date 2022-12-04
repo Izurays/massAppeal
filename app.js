@@ -25,7 +25,7 @@ const userRoutes = require ('./routes/user');
 const catchAsync = require("./utils/catchAsync");
 const { options } = require('joi');
 
-const dbUrl = process.env.DB_URI || 'mongodb://0.0.0.0:27017/mass-appeal';
+const dbUrl = process.env.DB_URI // 'mongodb://localhost:27017/mass-appeal';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
