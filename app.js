@@ -29,7 +29,7 @@ const dbUrl = process.env.DB_URI || 'mongodb://localhost:27017/mass-appeal';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    //useUnifiedTopology: true,
 });
 
 const db = mongoose.connection;
