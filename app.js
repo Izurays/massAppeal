@@ -25,7 +25,7 @@ const userRoutes = require ('./routes/user');
 const catchAsync = require("./utils/catchAsync");
 const { options } = require('joi');
 
-const dbUrl = process.env.DB_URI //'|| 'mongodb://localhost:27017/mass-appeal';
+const dbUrl = process.env.DB_URI || 'mongodb://localhost:27017/mass-appeal';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -149,7 +149,7 @@ if (!err.message) err.message = "Oh something went wrong"
     
 })
 
-const port = process.env.PORT //|| 3000;   
+const port = process.env.PORT || 3000;   
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })
