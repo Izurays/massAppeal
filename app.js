@@ -116,8 +116,12 @@ app.use("/contact/:id/comments",commentsRoutes);
 
 
 app.get('/',(req,res)=>{
-    res.render('index');
+    res.render('index.html');
 });
+
+app.get('/home',(req,res)=>{
+    res.render('index');
+})
 
 app.get('/videoupload',isLoggedIn,catchAsync(async(req,res)=>{
     const video = new Video(req.body.video);
