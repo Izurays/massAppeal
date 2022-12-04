@@ -25,7 +25,7 @@ const userRoutes = require ('./routes/user');
 const catchAsync = require("./utils/catchAsync");
 const { options } = require('joi');
 
-const dbUrl = process.env.DB_URI // 'mongodb://localhost:27017/mass-appeal';
+const dbUrl = process.env.DB_URI || 'mongodb://localhost:27017/mass-appeal';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -68,6 +68,18 @@ const store =  mongoDBstore.create({
    // secret:'thisissecret',
     //touchAfter: 24 * 60 * 60
 //});
+
+app.use(
+    session({
+      secret: "thisismysecret",
+      resave: false,
+      saveUninitialized: false,
+      store: MongoDbStore.create({
+        mongoUrl: "mongodb://localhost:27017/pizza",
+      }),
+      cookie: { maxAge: 1000 * 60 * 60 * 24 }, //cookie valid for 24 hours
+    })
+  );
 
 store.on("error", function (e) {
     console.log("SESSION STORE ERROR", e)
