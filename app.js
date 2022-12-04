@@ -28,10 +28,12 @@ const { options } = require('joi');
 const dbUrl = process.env.DB_URI // 'mongodb://localhost:27017/mass-appeal';
 
 mongoose.connect(dbUrl, {
-    bindIpAll: true,
-    ipv6 : true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    net:{
+        bindIpAll:true,
+        ipv6:true
+    }
 });
 
 const db = mongoose.connection;
