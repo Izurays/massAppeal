@@ -1,0 +1,9 @@
+# Redirects from what the browser requests to what we serve
+/home              /
+/contact  /contact
+/contact/:id         /contact/:id
+/contact/:id/editvideo    /contact/:id/editvideo  
+/register    /register
+/login    /login
+/logout    /logout
+/:commentid  /:commentid
