@@ -2,9 +2,4 @@
 
 /    /index.html   200
 /home      /home
-/contact   /contact
-/videoupload  /videoupload
-/contact/:id    /contact/:id
-/register   /register
-/login  /login
-/logout /logout
+
