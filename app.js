@@ -30,6 +30,7 @@ const dbUrl = process.env.DB_URI || 'mongodb://localhost:27017/mass-appeal';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    
 });
 
 const db = mongoose.connection;
@@ -64,6 +65,8 @@ const store =  mongoDBstore.create({
    // secret:'thisissecret',
     //touchAfter: 24 * 60 * 60
 //});
+
+
 
 store.on("error", function (e) {
     console.log("SESSION STORE ERROR", e)
@@ -116,8 +119,12 @@ app.use("/contact/:id/comments",commentsRoutes);
 
 
 app.get('/',(req,res)=>{
-    res.render('index');
+    res.render('index.html');
 });
+
+app.get('/home',(req,res)=>{
+    res.render('index');
+})
 
 app.get('/videoupload',isLoggedIn,catchAsync(async(req,res)=>{
     const video = new Video(req.body.video);
@@ -145,7 +152,7 @@ if (!err.message) err.message = "Oh something went wrong"
     
 })
 
-const port = process.env.PORT || 3000;0    
+const port = process.env.PORT || 3000;   
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
 })
