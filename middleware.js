@@ -40,6 +40,18 @@ module.exports.validateVideo = (req,res,next)=>{
     }
 }
 
+// module.exports.isAdmin = async (req,res,next)=>{
+//     const { id,commentid } = req.params;
+//     const video = await Video.findById(id);
+//     //const comment = await Comment.findById(commentid);
+//     if(!video.author.equals(req.user._id)){
+//         req.flash('error','You do not have permission to do that!');
+//         return res.redirect(`/contact/${video._id}`);
+//     }else{
+//         next();
+//     }
+// }
+
 module.exports.isAuthor = async (req,res,next)=>{
     const { id } = req.params;
     const video = await Video.findById(id);
@@ -54,15 +66,17 @@ module.exports.isAuthor = async (req,res,next)=>{
 
 module.exports.isCommentAuthor = async (req,res,next)=>{
     const { id,commentid } = req.params;
+    const video = await Video.findById(id);
     const comment = await Comment.findById(commentid);
-    if(!comment.author.equals(req.user._id)){
+    if( comment.author.equals(req.user._id) || video.author.equals(req.user._id)){
+        next();
+    }else{
         req.flash('error','You do not have permission to do that!');
         return res.redirect(`/contact/${video._id}`);
-    }else {
-        next();
     }
 
 }
+
 
 module.exports.validateComment = (req,res,next)=>{
     const { error } = commentSchema.validate(req.body)
