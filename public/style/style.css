@@ -2,17 +2,19 @@ body {
      background-image: url('background.jpg');
      
    }
-p {
-    color: rgb(244, 243, 248);
-}
+
 h1,h2 {
     color:gold;
+}
+p {
+    color: rgb(2, 80, 125);
 }
 #para {
     color:gold;
     font-weight: 900;
     text-shadow: 1px 1px 0px #0a0909;
 }
+
 #paratext {
     color:rgb(3, 74, 74);
 }
