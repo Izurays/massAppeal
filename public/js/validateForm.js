@@ -18,7 +18,7 @@
                 form.classList.add('was-validated')
             }, false)
         })
-})()
+})
 
 var alertList = document.querySelectorAll('.alert')
 alertList.forEach(function (alert) {
